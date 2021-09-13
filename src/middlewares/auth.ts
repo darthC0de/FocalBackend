@@ -6,7 +6,7 @@ async function authenticate(req: Request, res: Response, next: NextFunction){
     const Services = new User()
     const token  : any = req.headers.token;
     if(!token) return res.status(401).json({message:"You must provide a token"});
-    jwt.verify(token, "some_secret", async function(err: Error, decoded: JwtPayload) {
+    jwt.verify(token, process.env.APP_SECRET, async function(err: Error, decoded: JwtPayload) {
         if (err) return res.status(500).json({ auth: err.name, message: err.message });
         const user = await Services.findById(decoded.id);
         if (!user) return res.status(401).json({message:"Invalid Token"});
@@ -18,7 +18,7 @@ async function adminAccess(req: Request, res: Response, next: NextFunction){
     const Services = new User()
     const token  : any = req.headers.token;
     if(!token) return res.status(401).json({message:"You must provide a token"});
-    jwt.verify(token, "some_secret", async function(err: Error, decoded: JwtPayload) {
+    jwt.verify(token, process.env.APP_SECRET, async function(err: Error, decoded: JwtPayload) {
         if (err) return res.status(500).json({ auth: err.name, message: err.message });
         const user : any = await Services.findById(decoded.id);
         console.log(decoded,user)

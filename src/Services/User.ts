@@ -65,7 +65,7 @@ class User{
                 .catch((err: Error)=>reject({status:400,err}));
             if(!isValid) return reject({status:401,error:"Invalid credentials"})
 
-            const token = jwt.sign({id:user.id},"some_secret",{expiresIn:"15 days"});
+            const token = jwt.sign({id:user.id},process.env.APP_SECRET,{expiresIn:"15 days"});
 
             resolve({token})
         })  
