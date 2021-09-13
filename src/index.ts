@@ -6,7 +6,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Old statements
+// Old route statements
 import routes from './routes';
 app.use(routes);
 
