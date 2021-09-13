@@ -5,14 +5,17 @@ module.exports = {
   development: {
     client: 'sqlite3',
     connection: {
-      filename: './src/database/db.sqlite'
+      filename: './src/database/dev.sqlite3'
     },
-    migrations: {
-      directory: './src/database/migrations'
+    migrations:{
+      directory: "./src/database/migrations"
     },
-    useNullAsDefault: true,
+    seeds:{
+      directory: "./src/database/seeds"
+    },
+    useNullAsDefault: true
   },
-
+  
   test: {
     client: 'sqlite3',
     connection: {
@@ -25,19 +28,14 @@ module.exports = {
   },
 
   production: {
-    client: 'postgresql',
-    connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password'
-    },
-    pool: {
-      min: 2,
-      max: 10
-    },
+    client: 'pg',
+    connection: `${process.env.DATABASE_URL}?ssl=true`,
     migrations: {
-      tableName: 'knex_migrations'
-    }
+      directory: './src/database/migrations'
+    },
+    seeds: {
+      directory: './src/database/seeds/'
+    },
+    useNullAsDefault: true
   }
-
 };
